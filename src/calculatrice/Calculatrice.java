@@ -7,10 +7,14 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
+
+
+
+
 public class Calculatrice extends JFrame implements ActionListener {
 
-    private JTextField txtEquation = new JTextField(); // Champ pour l'équation
-    private JTextField txtInput = new JTextField();    // Champ pour le résultat
+    private JTextField txtEquation = new JTextField(); // Champ pour l'Ã©quation
+    private JTextField txtInput = new JTextField();    // Champ pour le rÃ©sultat
     private JButton[] numberButtons = new JButton[10];
     private JButton btAdd = new JButton("+");
     private JButton btSub = new JButton("-");
@@ -76,7 +80,10 @@ this.getContentPane().setBackground(Color.darkGray);
         }
 
      
-        numberButtons[0] = new JButton("0");
+        numberButtons[0] = new JButton(String.valueOf("0"));
+        numberButtons[0].addActionListener(this);
+        
+        
         this.btSqrt.setBounds(20, 370, 60, 50);
         numberButtons[0].setBounds(90, 370, 60, 50);
         this.btComma.setBounds(160, 370, 60, 50);
@@ -114,6 +121,14 @@ this.getContentPane().setBackground(Color.darkGray);
     
     
     
+    
+    
+    
+    ///////////////////////////////////////////////////////
+    
+    
+    
+    
 
     public static void main(String[] args) {
         new Calculatrice();
@@ -121,6 +136,14 @@ this.getContentPane().setBackground(Color.darkGray);
     
     
 
+    
+    
+///////////////////////////////////////////////////////
+    
+    
+    
+    
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         if (errorState) {
@@ -155,9 +178,9 @@ this.getContentPane().setBackground(Color.darkGray);
                 performOperation("-");
             }
         } else if (e.getSource() == btMul) {
-            performOperation("Ã—");
+            performOperation("x");
         } else if (e.getSource() == btDiv) {
-            performOperation("Ã·");
+            performOperation("/");
         } else if (e.getSource() == btEqual) {
             calculateResult();
         } else if (e.getSource() == btClear) {
@@ -192,6 +215,13 @@ this.getContentPane().setBackground(Color.darkGray);
             }
         }
     }
+    
+    
+    
+///////////////////////////////////////////////////////
+    
+    
+    
     private void performOperation(String operation) {
         try {
             if (!txtInput.getText().isEmpty()) {
@@ -211,23 +241,31 @@ this.getContentPane().setBackground(Color.darkGray);
             setErrorState();
         }
     }
+    
+    
+    
+    
+///////////////////////////////////////////////////////
+    
+    
+    
+    
 
     private void calculateResult() {
         try {
             if (!txtInput.getText().isEmpty() && !currentOperation.isEmpty()) {
                 double input = Double.parseDouble(txtInput.getText().replace(",", "."));
-                switch
-    (currentOperation) {
+                switch (currentOperation) {
                     case "+":
                         result += input;
                         break;
                     case "-":
                         result -= input;
                         break;
-                    case "Ã—":
+                    case "x":
                         result *= input;
                         break;
-                    case "Ã·":
+                    case "/":
                         if (input != 0) {
                             result /= input;
                         } else {
@@ -247,6 +285,11 @@ this.getContentPane().setBackground(Color.darkGray);
             setErrorState();
         }
     }
+    
+    
+///////////////////////////////////////////////////////
+    
+    
 
     private void clearAll() {
         txtInput.setText("");
@@ -257,6 +300,11 @@ this.getContentPane().setBackground(Color.darkGray);
         allowNegative = false;
         errorState = false;
     }
+    
+    
+    
+    
+///////////////////////////////////////////////////////
 
     private void setErrorState() {
         txtInput.setText("Erreur");
